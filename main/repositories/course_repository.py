@@ -1,31 +1,48 @@
-from botCursos_UM.main.models.course import Course
-from main.repositories.irepository import Create, Delete, Read, Update
+from main.repositories.repository import Create, Delete, Read, Update
+from main.models import CourseModel
 from .. import db
 
-class CourseRepository(Create, Read, Update, Delete):
+# TODO: Implementar delete en caso de agregar administrador para eliminar cursos.
+class CourseRepository(Create, Read, Update):
+    '''
+    Clase que representa el repositorio de la entidad Course
+    param:
+        - Create: Clase que hereda de la interfaz Create
+        - Read: Clase que hereda de la interfaz Read
+        - Update: Clase que hereda de la interfaz Update
+    '''
+    
     def __init__(self,):
-        self.type_model = Course
+        self.__type_model = CourseModel
 
     def create(self, model: db.Model):
-        db.session.add(model) # Agrega el modelo a la sesión
-        db.session.commit() # Guarda los cambios en la base de datos
-        return model # Retorna el modelo
+        db.session.add(model)
+        db.session.commit()
+        return model
 
     def update(self, model: db.Model) -> db.Model:
-        db.session.merge(model) # Actualiza el modelo en la sesión
-        db.session.commit() # Guarda los cambios en la base de datos
-        return model # Retorna el modelo si existe, de lo contrario retorna None
-
-    def delete(self, model: db.Model):
-        db.session.delete(model) # Elimina el modelo de la sesión
-        db.session.commit() # Guarda los cambios en la base de datos
-
-    def delete_by_id(self, id: int):
-        db.session.query(self.type_model).filter_by(id=id).delete() # Elimina el modelo de la sesión
-        db.session.commit() 
+        db.session.merge(model)
+        db.session.commit()
+        return model 
 
     def find_all(self):
-        return db.session.query(db.Model).all()
+        model = db.session.query(self.__type_model).all()
+        return model
 
     def find_by_id(self, id: int) -> db.Model:
-        return db.session.query(self.type_model).filter_by(id=id).first() # Retorna el modelo si existe, de lo contrario retorna None
+        model = db.session.query(self.__type_model).filter_by(id=id).first()
+        return model
+
+    def find_course_by_url(self, course_url: str) -> db.Model:
+        model = db.session.query(self.__type_model).filter(self.__type_model.url == course_url).first()
+        return model
+
+    def add_count(self, id: int) -> db.Model:
+        model = self.find_by_id(id)
+        model.count += 1
+        db.session.commit()
+        return model
+
+    def find_top_courses(self) -> db.Model:
+        model = db.session.query(self.__type_model).order_by(self.__type_model.count.desc()).all()
+        return 

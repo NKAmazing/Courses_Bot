@@ -2,5 +2,8 @@ Flask
 Flask-Discord
 python-dotenv
 flask_sqlalchemy
+flask-marshmallow
 selenium
 webdriver-manager
+requests==2.25.1
+colorama
