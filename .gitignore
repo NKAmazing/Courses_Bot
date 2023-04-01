@@ -134,4 +134,5 @@ dmypy.json
 .idea
 pyvenv.cfg
 /include
+/lib64
 
