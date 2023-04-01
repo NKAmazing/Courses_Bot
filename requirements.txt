@@ -1,9 +1,4 @@
 Flask
-Flask-Discord
-python-dotenv
-flask_sqlalchemy
-flask-marshmallow
+discord.py
 selenium
-webdriver-manager
-requests==2.25.1
-colorama
+python-dotenv
