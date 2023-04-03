@@ -1,5 +1,5 @@
 # Courses_Bot
-This Bot is a project oriented to search for programming courses on the Internet.
+This is a project of a Discord Bot oriented to search for programming courses on the Internet.
 
 I am currently setting up the structure and working on the operation of the Bot.
 
